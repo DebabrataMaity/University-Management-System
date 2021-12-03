@@ -1,0 +1,38 @@
+{% extends 'info/base.html' %}
+
+{% block content %}
+
+
+<form action="info/" method="POST">
+    {% csrf_token %}
+    <div class="container">
+      <h1>Register</h1>
+      <p>Please fill in this form to add Notification.</p>
+      <hr>
+  
+      <label for="text"><b>Sr No.</b></label>
+      <input type="integer" placeholder="Serial Number" name="sno" id="sno" required>
+  
+      <label for="psw"><b>Author</b></label>
+      <input type="text" placeholder="author" name="author"  id="author" required>
+  
+      <label for="text"><b>Title</b></label>
+      <input type="text" placeholder="title" name="title" id="title" required>
+
+      <label for="text"><b>Content</b></label>
+      <input type="text" placeholder="content" name="content" id="content" required>
+
+      <label for="text"><b>Slug</b></label>
+      <input type="text" placeholder="slug" name="slug" id="slug" required>
+
+      <label for="time"><b>TimeStamp</b></label>
+      <input type="time" placeholder="timestamp" name="timestamp" id="timestamp" required>
+      <hr>
+  
+      <button type="submit" value="Post" class="registerbtn">Register</button>
+    </div>
+  
+    \
+  </form>
+
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'info/base.html' %}
+    {% load static %}
+
+    {% block content %}
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Social Book!</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row {
+  
+}
+</style>
+    <h1>Report Status</h1>
+    <div class="column">
+
+    <div id="piechart"></div>
+    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script type="text/javascript">
+    // Load google charts
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    
+    // Draw the chart and set the chart values
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+      ['Task', 'Hours per Day'],
+      ['Below 20',{{ci.0}}],
+      ['20-40', {{ci.1}}],
+      ['40-60', {{ci.2}}],
+      ['60-80', {{ci.3}}],
+      ['Above 80', {{ci.4}}]
+    ]);
+    
+      // Optional; add a title and set the width and height of the chart
+      var options = {'title':'CIE Marks', 'width':550, 'height':400};
+    
+      // Display the chart inside the <div> element with id="piechart"
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+      chart.draw(data, options);
+    }
+    </script>
+    </div>
+
+    <div class="row">
+<div id="piechart1"></div>
+    
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Task', 'Hours per Day'],
+  ['Below 20',{{atte.0}}],
+  ['20-40', {{atte.1}}],
+  ['40-60', {{atte.2}}],
+  ['60-80', {{atte.3}}],
+  ['Above 80', {{atte.4}}]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Attendance', 'width':550, 'height':400};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
+  chart.draw(data, options);
+}
+</script>
+<br>
+</div>
+
+                  <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+            <b>Marks</b></div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                        <th style="width: 25%">Student USN</th>
+                        <th style="width: 25%">Student Name</th>
+                        <th style="width: 25%">Attendance</th>
+                        <th style="width: 25%">CIE</th>
+                  </thead>
+                  <tbody>
+                    {% for sc in sc_list %}
+                    <tr>
+                        <td>{{ sc.student_id }}</td>
+                        <td>{{ sc.student.name }}</td>
+                        {% if sc.get_attendance < 75 %}
+                            <td class="p-3 mb-2 bg-danger text-white">{{ sc.get_attendance }}</td>
+                        {% else %}
+                            <td class="p-3 mb-2 bg-success text-white">{{ sc.get_attendance }}</td>
+                        {% endif %}
+                        {% if sc.get_cie < 25 %}
+                            <td class="p-3 mb-2 bg-danger text-white">{{ sc.get_cie }}</td>
+                        {% else %}
+                            <td class="p-3 mb-2 bg-success text-white">{{ sc.get_cie }}</td>
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                            <p>student has no courses</p>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+    {% endblock %}
